@@ -1,0 +1,65 @@
+MEOW MAYHEM — versión Android (APK)
+=====================================
+
+QUÉ CAMBIÓ PARA CELULAR
+------------------------
+El mismo juego (meow_mayhem.py) ahora detecta automáticamente cuando corre
+en Android y dibuja botones táctiles en pantalla durante el laberinto, los
+niveles de plataformas y las peleas de jefe:
+
+  - Cruceta (izquierda) para moverte / navegar el laberinto
+  - SALTO (grande, abajo a la derecha)
+  - GOLPE (ataque cuerpo a cuerpo del gato)
+  - BOLA (lanzar la pelota a los enemigos)
+  - II  (pausa, arriba a la derecha)
+
+Soporta multitáctil real: puedes mantener la cruceta y tocar SALTO al mismo
+tiempo, por ejemplo. En PC (JUGAR.bat / CREAR_EXE.bat) todo sigue siendo
+con teclado, sin botones en pantalla — no cambia nada de la versión Windows.
+
+CÓMO CONSEGUIR EL .APK
+------------------------
+No puedo compilar un .apk desde aquí directamente: generar un APK de verdad
+requiere el Android SDK + NDK (varios GB de herramientas de Google) que este
+entorno no puede descargar. La forma más simple y gratuita de conseguir el
+.apk real es dejar que GitHub lo compile por ti con el archivo que ya te dejé
+listo (.github/workflows/build-apk.yml). Son 4 pasos, sin instalar nada:
+
+  1. Crea una cuenta gratis en https://github.com (si no tienes una) y crea
+     un repositorio nuevo, por ejemplo "meow-mayhem".
+  2. Sube TODOS los archivos de esta carpeta a ese repositorio (arrastrando
+     los archivos en la web de GitHub con "Add file > Upload files", o con
+     git si lo conoces).
+  3. Entra a la pestaña "Actions" de tu repositorio. Va a empezar solo un
+     trabajo llamado "Build MEOW MAYHEM APK" (tarda entre 15 y 30 minutos
+     la primera vez, porque descarga las herramientas de Android).
+  4. Cuando termine (ícono verde ✓), entra al trabajo y baja hasta
+     "Artifacts": ahí vas a encontrar "MeowMayhem-APK" para descargar.
+     Ese .zip trae tu MeowMayhem-debug.apk.
+
+Para instalarlo en tu celular: pásate el .apk (por USB, Drive, WhatsApp,
+etc.), ábrelo desde el explorador de archivos del teléfono, y si Android
+pregunta, permite "instalar apps de orígenes desconocidos" solo para ese
+archivo. Es un APK de "debug" (sin firmar para la Play Store), así que
+Android también puede mostrar un aviso de "app no verificada" — es normal
+para apps instaladas fuera de la Play Store, dale a "instalar de todas
+formas".
+
+ALTERNATIVA (si tienes Linux a mano)
+------------------------
+Si tienes o puedes usar una PC/VM con Linux, también puedes compilarlo tú
+mismo sin GitHub:
+
+    pip3 install buildozer cython
+    buildozer android debug
+
+Esto descarga el SDK/NDK de Android la primera vez (pesado) y deja el .apk
+en la carpeta bin/. Requiere Linux (buildozer no corre en Windows).
+
+ARCHIVOS DE ESTA CARPETA
+------------------------
+  main.py              -> punto de entrada que usa Android
+  meow_mayhem.py        -> el juego completo (igual al de la versión PC + botones táctiles)
+  buildozer.spec        -> configuración de la app Android (nombre, ícono, permisos)
+  icon_512.png / presplash.png -> ícono y pantalla de carga de la app
+  .github/workflows/build-apk.yml -> hace que GitHub compile el .apk por ti
